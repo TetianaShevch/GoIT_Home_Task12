@@ -8,23 +8,33 @@ class AddressBook(UserDict):
         super().__init__()
         self.counter = 0
         self.n = n
-        self.file = 'Address_Book.bin' 
-
+        self.file = 'Address_Book.bin'
+        self.line_count = 0
+        
     def __saving_address_book(self): # Метод збереження даних адресної книги на диск (файл Address_Book.bin).
-        with open(self.file, 'wb') as fl:
-            pickle.dump((self.data), fl)
+        with open(self.file, 'wb') as fh:
+            pickle.dump((self.data), fh)
 
              
     def loading_address_book(self, file): # Метод завантаження даних адресної книги з диску (файлу Address_Book.bin).
-        with open(file, 'rb') as fl:
-            self.data = pickle.load(fl)
-        
-        
-    def add_record(self, record = Record):
+        with open(file, 'rb') as fh:
+            self.data = pickle.load(fh)        
+       
+    def add_record(self, record = Record): 
         self.data[record.name.value] = record 
         print(f'Contact of {record.name.value} was added')
         self.__saving_address_book() # викликається метод збереження адресної книги на диск при додаванні запису.
 
+    def find_record(self, str_to_find:str):            # Метод пошуку і друку контактів в адресній книзі, 
+        lines = ''                                     # у яких в даних є визначений рядок str_to_find.
+        for record in self.data.values():  
+            line = record.__str__()
+            if str_to_find.casefold() in line.casefold():
+                lines += line
+        return lines if len(lines) else print('The contact was not found')
+        
+            
+                
     def __next__(self):
         if self.n > len(self.data):  
             self.n = len(self.data) 
