@@ -33,7 +33,7 @@ class Record():
         """
         birthday_str = str(date(self.birthday.value.year, self.birthday.value.month, self.birthday.value.day)) if self.birthday != None else "-"
         phones_str = " ".join([ph.value for ph in self.phones]) if self.phones else "-"
-        return f'{self.name} -->> phone(s): {phones_str}; birthday: {birthday_str}\n'
+        return f'{self.name} -->> phone(s): {phones_str}; birthday: {birthday_str}'
     
     def add_phone(self, phone: Phone):
         for i in self.phones:

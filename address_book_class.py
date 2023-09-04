@@ -26,11 +26,11 @@ class AddressBook(UserDict):
         self.__saving_address_book() # викликається метод збереження адресної книги на диск при додаванні запису.
 
     def find_record(self, str_to_find:str):            # Метод пошуку і друку контактів в адресній книзі, 
-        lines = ''                                     # у яких в даних є визначений рядок str_to_find.
+        lines = []                                     # у яких в даних є визначений рядок str_to_find.
         for record in self.data.values():  
             line = record.__str__()
             if str_to_find.casefold() in line.casefold():
-                lines += line
+                lines.append(line)
         return lines if len(lines) else print('The contact was not found')
         
             
@@ -45,7 +45,7 @@ class AddressBook(UserDict):
                 if i < self.counter//self.n * self.n:  
                     i += 1                             
                     continue                           
-                result += str(record)
+                result += str(record) + '\n'
                 self.counter += 1
                 if not self.counter % self.n:  
                     return result
